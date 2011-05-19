@@ -10,6 +10,7 @@ expect('three');
 Step(
   function readSelf() {
     fulfill("one");
+    this.memento.foo = "bar";
     fs.readFile(__filename, 'utf8', this);
   },
   function capitalize(err, text) {
@@ -24,6 +25,7 @@ Step(
     if (err) throw err;
     assert.equal(selfText.toUpperCase(), newText, "Text Uppercased");
     assert.deepEqual(this.memento.hai, 'IHazContext');
+    assert.deepEqual(this.memento.foo, 'bar');
     assert.deepEqual(this.memento.downcase, newText.toLowerCase());
   },
   {hai: "IHazContext"}
